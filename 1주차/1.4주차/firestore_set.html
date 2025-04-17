@@ -1,0 +1,57 @@
+﻿<script type="module">
+    // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCT741NNIp8huBOT2w-MB4L9JJCBlRUsyc",
+        authDomain: "kakao-first-week.firebaseapp.com",
+        projectId: "kakao-first-week",
+        storageBucket: "kakao-first-week.firebasestorage.app",
+        messagingSenderId: "664764747232",
+        appId: "1:664764747232:web:b1ca40641041453dfcef85",
+        measurementId: "G-RRC3FTC72V"
+    };
+
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+
+    $(document).ready(function () {
+        let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+        fetch(url).then(res => res.json()).then(data => {
+            let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+            $('#msg').text(mise)
+        })
+    })
+
+    function openclose() {
+        $('#postingbox').toggle();
+    }
+    function makeCard() {
+        let image = $('#image').val();
+        let title = $('#title').val();
+        let content = $('#content').val();
+        let date = $('#date').val();
+
+        let temp_html = `
+        <div class="col">
+            <div class="card h-100">
+                <img src="${image}"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${content}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">${date}</small>
+                </div>
+            </div>
+        </div>`;
+        $('#card').append(temp_html);
+    }
+</script>
